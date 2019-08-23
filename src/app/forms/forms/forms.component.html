@@ -1,0 +1,94 @@
+<div class="jumbotron text-center">
+  <h2>Generate Dynamic Form Fields</h2>
+</div>
+
+<div class="container">
+  <div class="row  m-2">
+    <div class="col-md-12 text-right">
+      <button class="btn btn-primary" (click)="open(content,x)">Create Field</button>
+    </div>
+  </div>
+  <dynamic-form-builder [fields]="getFields()"></dynamic-form-builder>
+
+  <div class="clearfix"></div>
+
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Custom Field</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="name">Input Types:</label>
+        <select class="form-control" name="input-type" [(ngModel)]="inputType">
+          <option *ngFor='let x of types' value="{{x.value}}">{{x.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fieldLabel">Field Label:</label>
+        <input type="text" class="form-control" name="fieldLabel" placeholder="Field label" id="fieldLabel"
+          [(ngModel)]="labelName">
+      </div>
+      <div class="form-group">
+        <label for="formControlName">Form control Name:</label>
+        <input type="text" class="form-control" placeholder="Form Control Name" name="formControlName"
+          id="formControlName" [(ngModel)]="controlName">
+      </div>
+      <div class="form-group">
+        <label for="placeholder">Placeholder Name:</label>
+        <input type="text" class="form-control" placeholder="Placeholder" name="placeholder"
+          placeholder="Placeholder name" id="placeholder" [(ngModel)]="placeholderName">
+      </div>
+      <div class="form-group"
+        *ngIf="options.length>0 && (inputType === 'checkbox' || inputType === 'radio' || inputType === 'dropdown' )">
+        <label for="options">Options:</label>
+        <div class="row mt-2" *ngFor="let j of options; let k = index">
+          <div class="col-md-5">
+            <div class="row">
+              <div class="col-md-12">
+                <label for="keyName">Key Name</label>
+              </div>
+              <div class="col-md-12">
+                <input placeholder="Key Name" maxlength="12" (keyup)="onKeyEnter($event, k)" required name="keyName"
+                  value="{{j.key}}">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <div class="col-md-12">
+                <label for="labelName">Label Name</label>
+              </div>
+              <div class="col-md-12">
+                <input placeholder="Label Name" maxlength="12" (keyup)="onKeyLabel($event,k)" required name="labelName"
+                  value="{{j.label}}">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-2">
+            <a href="javascript:void(0)" class="text-dark" (click)="removeOption(k)">X</a>
+          </div>
+        </div>
+        <div class="float-right"><a href="javascript:void(0)" (click)="addOption()">Add Option</a></div>
+        <div class="clearfix mt-2"></div>
+      </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label><input type="checkbox" name="isRequired" [(ngModel)]="isRequired"> Is Required</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="text-center">
+          <button class="btn btn-info" (click)="addCustomField()">Add Field</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

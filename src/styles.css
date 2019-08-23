@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr';
+
+field-builder {
+  float: left;
+  width: 95%;
+  padding: 0 10px;
+}
+
+field-builder label.col-md-3.form-control-label {
+  padding: 10px;
+}
+
+.column-custom {
+  float: left;
+  width: 50%;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.text-dark {
+  font-size: 12px;
+}
